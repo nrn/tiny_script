@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+
+<link rel="stylesheet" href="./style.css">
+<title>Tiny Script</title>
+
+<nav class="top_nav">
+  <a href="/">Home</a>
+</nav>
+
+<main>
+  <h1>Tiny Script</h1>
+
+  <p> I'm playing with a better way of authoring bookmarklets. The idea is to
+  be able to easily author and use your own tiny scripts on your favorite
+  websites from your favorite mobile device. To do that I'm developing a
+  bookmarklet for developing bookmarklets. I promise, it's not just some meta
+  BS. My goal is to make it easier for anyone to write their first useful
+  program.
+
+  <p> This page will be the landing page with instructions to install
+  bookmarlets you've been linked to, as well as a pointer to <a
+    id="creator_link" href="#">get started writing your own tiny script.</a>
+
+  <p>
+    Link: <a id="linked_link" href="#">unknown</a> or <a id="creator_with_linked_link" href="#">edit this script</a>
+    <pre id="linked_code">
+Didn't detect any scripts in the URL.
+Try clicking 'get started' above.
+    </pre>
+  </p>
+
+  <script data-title="bookmarklet" data-fn-name="bookmarklet">
+function bookmarklet (name, code) {
+
+  var container = document.createElement('div')
+  container.style = `
+position: fixed;
+left: 0;
+right: 0;
+bottom: 0;
+backkground-color: #FFFFFF;
+`
+  name = name || localStorage['tiny_script_name'] || 'Link Text'
+  container.innerHTML = `
+<div style="background-color: #FFF; padding: 5px; margin 3px;">
+  <input id="tiny_script_name" value='${name}'></input>
+  <span> -> </span>
+  <a id="tiny_script_link" href="#">${name}</a>
+  <button id="tiny_script_tryme" style="float: right; background-color: #00FF00;">try me</button>
+  <div>
+    <textarea id="tiny_script_text" wrap="off" rows="6" style="width: 99%; resize: none;"></textarea>
+  </div>
+</div>
+`
+  document.body.appendChild(container)
+  var tiny_script = [ 'text', 'tryme', 'name', 'link' ].reduce(function (acc, name) {
+    acc[name] = document.getElementById('tiny_script_' + name)
+    return acc
+  }, {})
+
+  code = tiny_script.text.value = code || localStorage['tiny_script_script'] || `alert(\`
+Write some JavaScript here!
+Press try me to execute it on this page.
+Bookmark the link and remove everything up to and including the '#'
+to make a reusable bookmarklet.
+\`)
+`
+
+  update()
+  tiny_script.text.addEventListener('input', function (e) {
+    code = tiny_script.text.value
+    localStorage['tiny_script_script'] = code
+    update()
+  })
+  tiny_script.name.addEventListener('input', function (e) {
+    name = tiny_script.name.value
+    localStorage['tiny_script_name'] = name
+    tiny_script.link.innerHTML = name
+  })
+  tiny_script.tryme.addEventListener('click', function (e) {
+    try {
+      ;(new Function(code))()
+    } catch (e) {
+      alert(e.name + ': ' + e.message)
+    }
+  })
+  function update () {
+    return tiny_script.link.href = location.href.split(/[#|?]/)[0] + '?name=' +
+      encodeURIComponent(name) +
+      '#javascript:;(function(){\n' + encodeURIComponent(code) + '\n})();'
+  }
+}
+  </script>
+</main>
+<script>
+    document.getElementById('creator_link').href = createUrl('Bookmarklet Creator', window.bookmarklet.toString())
+    document.getElementById('linked_link').href = createUrl()
+    document.getElementById('creator_with_linked_link').onclick = function (e) {
+      e.preventDefault()
+      bookmarklet('name', decodeURIComponent(location.hash).split('\n').slice(1, -1).join('\n'))
+    }
+    document.getElementById('linked_code').innerHTML = decodeURIComponent(location.hash).split('\n').slice(1, -1).join('\n')
+    function createUrl (name, code) {
+      return '?name=' + encodeURIComponent(name) + '#javascript:;(%0A' + encodeURIComponent(code) + '%0A)();'
+    }
+</script>

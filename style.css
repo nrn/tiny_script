@@ -1,0 +1,33 @@
+body {
+  /* display: flex; */
+  /* flex-direction: row; */
+  /* justify-content: center; */
+}
+main {
+  max-width: 600px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+/* main script { */
+/*   display: flex; */
+/*   white-space: pre; */
+/*   font-family: monospace; */
+/*   background-color: #efefef; */
+/*   margin: 5px; */
+/*   padding-left: 5px; */
+/* } */
+
+.literal {
+  background-color: #efefef;
+}
+
+pre.literal {
+  padding-top: 10px;
+}
+
+.top_nav {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}

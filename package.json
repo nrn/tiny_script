@@ -1,0 +1,16 @@
+{
+  "name": "tinyscript",
+  "private": true,
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "ecstatic . --port=7171"
+  },
+  "author": "Nick Niemeir <nick.niemeir@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "ecstatic": "^1.4.0"
+  },
+  "dependencies": {
+  }
+}
