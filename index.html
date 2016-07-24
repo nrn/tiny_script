@@ -4,30 +4,29 @@
 <title>Tiny Script</title>
 
 <nav class="top_nav">
-  <a href="/">Home</a>
+  <a href="/">Clear script to default.</a>
 </nav>
 
 <main>
   <h1>Tiny Script</h1>
 
-  <p> I'm playing with a better way of authoring bookmarklets. The idea is to
-  be able to easily author and use your own tiny scripts on your favorite
-  websites from your favorite mobile device. To do that I'm developing a
-  bookmarklet for developing bookmarklets. I promise, it's not just some meta
-  BS. My goal is to make it easier for anyone to write their first useful
-  program.
+  <h3> Welcome to the Tiny Script Playground!</h3>
 
-  <p> This page will be the landing page with instructions to install
-  bookmarlets you've been linked to, as well as a pointer to <a
-    id="start_link" href="#">get started writing your own tiny script.</a>
-  Or, get the <a id="creator_link" href="#">bookmarket creator bookmarklet</a>,
-  and start hacking on your own bookmarklets on other sites!
+  <p> To use a bookmarklet script: bookmark the link (or this page), edit the
+  bookmark and remove everything upto and including the first <code>#</code>.
+  The link should now start with <code>javascript:;(function(){</code>. When
+  you click on it the included script will run on the webpage you are
+  on. If you didn't remove the first part, you would land back here, editing
+  the script instead of running it.
 
-  <p> To install the script you're working on below, bookmark it using your
-  browsers bookmark function. That link will bring you back to this page, ready
-  to edit it again. To actually use it, edit the bookmark link and remove
-  everything upto and including the first <code>#</code>. The link should now start
-    with <code>javascript:;(function(){</code>
+  <p> The <a id="creator_link" href="#">Tiny Script Playground bookmarklet</a>
+  can be used on any site too! Install it using the normal bookmark install
+  instructions above, and then use it to develop bookmarklets anywhere.
+  
+  <p> <strong>WARNING:</strong> Bookmarklets you run on a webpage can do
+  anything you are authorized to do on that site. This includes hijacking
+  your account. Don't run bookmarklets you don't understand on webpages you
+  care about. Ever.
 
   <script data-title="bookmarklet" data-fn-name="bookmarklet">
 function bookmarklet (name, code) {
@@ -87,8 +86,7 @@ to make a reusable bookmarklet.
   </script>
 </main>
 <script>
-    document.getElementById('creator_link').href = createUrl('Bookmarklet Creator', window.bookmarklet.toString())
-    document.getElementById('start_link').href = createUrl('','')
+    document.getElementById('creator_link').href = createUrl('Tiny Script Bookmarklet Creator', window.bookmarklet.toString())
     var queryObj = location.search.substring(1).split('&').reduce(function (acc, raw) {
       var parts = raw.split('=').map(function (a) { return decodeURIComponent(a) })
       acc[parts[0]] = parts[1]
