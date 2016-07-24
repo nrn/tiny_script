@@ -19,27 +19,21 @@
 
   <p> This page will be the landing page with instructions to install
   bookmarlets you've been linked to, as well as a pointer to <a
-    id="creator_link" href="#">get started writing your own tiny script.</a>
+    id="start_link" href="#">get started writing your own tiny script.</a>
+  Or, get the <a id="creator_link" href="#">bookmarket creator bookmarklet</a>,
+  and start hacking on your own bookmarklets on other sites!
 
-  <p>
-    Link: <a id="linked_link" href="#">unknown</a> or <a id="creator_with_linked_link" href="#">edit this script</a>
-    <pre id="linked_code">
-Didn't detect any scripts in the URL.
-Try clicking 'get started' above.
-    </pre>
-  </p>
+  <p> To install the script you're working on below, bookmark it using your
+  browsers bookmark function. That link will bring you back to this page, ready
+  to edit it again. To actually use it, edit the bookmark link and remove
+  everything upto and including the first <code>#</code>. The link should now start
+    with <code>javascript:;(function(){</code>
 
   <script data-title="bookmarklet" data-fn-name="bookmarklet">
 function bookmarklet (name, code) {
 
   var container = document.createElement('div')
-  container.style = `
-position: fixed;
-left: 0;
-right: 0;
-bottom: 0;
-backkground-color: #FFFFFF;
-`
+  container.style = 'position: fixed; left: 0; right: 0; bottom: 0; backkground-color: #FFFFFF;'
   name = name || localStorage['tiny_script_name'] || 'Link Text'
   container.innerHTML = `
 <div style="background-color: #FFF; padding: 5px; margin 3px;">
@@ -85,7 +79,7 @@ to make a reusable bookmarklet.
     }
   })
   function update () {
-    return tiny_script.link.href = location.href.split(/[#|?]/)[0] + '?name=' +
+    return tiny_script.link.href = location.href.split(/[#?]/)[0] + '?tiny_script_name=' +
       encodeURIComponent(name) +
       '#javascript:;(function(){\n' + encodeURIComponent(code) + '\n})();'
   }
@@ -94,13 +88,14 @@ to make a reusable bookmarklet.
 </main>
 <script>
     document.getElementById('creator_link').href = createUrl('Bookmarklet Creator', window.bookmarklet.toString())
-    document.getElementById('linked_link').href = createUrl()
-    document.getElementById('creator_with_linked_link').onclick = function (e) {
-      e.preventDefault()
-      bookmarklet('name', decodeURIComponent(location.hash).split('\n').slice(1, -1).join('\n'))
-    }
-    document.getElementById('linked_code').innerHTML = decodeURIComponent(location.hash).split('\n').slice(1, -1).join('\n')
+    document.getElementById('start_link').href = createUrl('','')
+    var queryObj = location.search.substring(1).split('&').reduce(function (acc, raw) {
+      var parts = raw.split('=').map(function (a) { return decodeURIComponent(a) })
+      acc[parts[0]] = parts[1]
+      return acc
+    }, {})
+    bookmarklet(queryObj.tiny_script_name, decodeURIComponent(location.hash).split('\n').slice(1, -1).join('\n'))
     function createUrl (name, code) {
-      return '?name=' + encodeURIComponent(name) + '#javascript:;(%0A' + encodeURIComponent(code) + '%0A)();'
+      return '?tiny_script_name=' + encodeURIComponent(name) + '#javascript:;(' + encodeURIComponent(code) + ')();'
     }
 </script>

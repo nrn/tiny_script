@@ -9,6 +9,11 @@ main {
   margin-left: auto;
 }
 
+code {
+  background-color: #CCC;
+  padding: .2em .5em;
+}
+
 /* main script { */
 /*   display: flex; */
 /*   white-space: pre; */
