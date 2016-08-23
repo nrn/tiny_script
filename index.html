@@ -29,7 +29,14 @@
   care about. Ever.
 
   <script data-title="bookmarklet" data-fn-name="bookmarklet">
-function bookmarklet (name, code) {
+function bookmarklet (injectedName, injectedCode) {
+  var name, code
+  if (typeof injectedName !== 'undefined') {
+    name = injectedName
+  }
+  if (typeof injectedCode !== 'undefined') {
+    code = injectedCode
+  }
 
   var container = document.createElement('div')
   container.style = 'position: fixed; left: 0; right: 0; bottom: 0; backkground-color: #FFFFFF;'
@@ -78,7 +85,7 @@ to make a reusable bookmarklet.
     }
   })
   function update () {
-    return tiny_script.link.href = location.href.split(/[#?]/)[0] + '?tiny_script_name=' +
+    return tiny_script.link.href = 'https://www.tinyscript.net/?tiny_script_name=' +
       encodeURIComponent(name) +
       '#javascript:;(function(){\n' + encodeURIComponent(code) + '\n})();'
   }
