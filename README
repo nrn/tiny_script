@@ -1,0 +1,6 @@
+# Tinyscript.
+
+A playground for building bookmarklets. Published at http://www.tinyscript.net.
+
+To run locally, clone this repository and `npm install && npm start`, then
+navigate to localhost:7171
